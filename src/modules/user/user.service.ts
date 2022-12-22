@@ -43,7 +43,7 @@ export class UserService {
 		await this.userRepository.save(newUser);
 
 		// Send welcome email
-		this.mailService.sendWelcome(newUser, password);
+		await this.mailService.sendWelcome(newUser, password);
 
 		return newUser;
 	}
@@ -139,7 +139,7 @@ export class UserService {
 		});
 
 		// Send password changed email
-		this.mailService.sendPasswordChanged(user);
+		await this.mailService.sendPasswordChanged(user);
 
 		return user;
 	}

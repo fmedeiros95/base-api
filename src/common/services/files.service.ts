@@ -83,7 +83,9 @@ export class FilesService {
 				this.logger.error(error);
 			}
 		} else {
-			return this.awsS3Service.deleteFile(key);
+			this.awsS3Service.deleteFile(key).catch((error) => {
+				this.logger.error(error);
+			});
 		}
 	}
 
@@ -97,7 +99,9 @@ export class FilesService {
 		if (this.configService.get('STORAGE_TYPE') !== 's3') {
 			keys.forEach((key) => this.deleteFile(key));
 		} else {
-			return this.awsS3Service.deleteFiles(keys);
+			this.awsS3Service.deleteFiles(keys).catch((error) => {
+				this.logger.error(error);
+			});
 		}
 	}
 

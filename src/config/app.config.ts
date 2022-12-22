@@ -6,5 +6,5 @@ export default registerAs('app', () => ({
 	workingDirectory: process.env.PWD || process.cwd(),
 	frontendDomain: process.env.FRONTEND_DOMAIN,
 	backendDomain: process.env.BACKEND_DOMAIN,
-	port: Number(process.env.APP_PORT || process.env.PORT) || 3000
+	port: Number(process.env.APP_PORT || process.env.PORT) || 3000,
 }));

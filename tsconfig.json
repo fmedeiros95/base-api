@@ -18,6 +18,8 @@
 		"skipLibCheck": true,
 		"strictNullChecks": false,
 		"noImplicitAny": false,
+		"esModuleInterop": true,
+		"noImplicitReturns": true,
 		"strictBindCallApply": false,
 		"forceConsistentCasingInFileNames": false,
 		"noFallthroughCasesInSwitch": false,

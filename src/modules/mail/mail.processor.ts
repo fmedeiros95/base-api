@@ -9,7 +9,7 @@ import {
 } from '@nestjs/bull';
 import { Logger } from '@nestjs/common';
 import { Job } from 'bull';
-import * as moment from 'moment';
+import moment from 'moment';
 
 const { APP_NAME, FRONTEND_DOMAIN } = process.env;
 @Processor('MailQueue')

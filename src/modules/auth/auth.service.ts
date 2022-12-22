@@ -55,7 +55,7 @@ export class AuthService {
 			type: 'reset-password',
 		} as IJwtPayload;
 		const jwtToken = this.jwtService.sign(payload, { expiresIn: '15m' });
-		this.mailService.sendResetPassword(user, jwtToken);
+		await this.mailService.sendResetPassword(user, jwtToken);
 
 		return {
 			message:
@@ -71,7 +71,7 @@ export class AuthService {
 		});
 
 		// Send password changed email
-		this.mailService.sendPasswordChanged(user);
+		await this.mailService.sendPasswordChanged(user);
 
 		return { message: 'Password successfully updated' };
 	}

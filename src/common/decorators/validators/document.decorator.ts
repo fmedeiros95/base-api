@@ -19,7 +19,7 @@ export function IsDocument(validationOptions?: ValidationOptions) {
 
 @ValidatorConstraint({ name: 'document', async: true })
 export class IsDocumentConstraint implements ValidatorConstraintInterface {
-	async validate(value: string | number) {
+	validate(value: string | number) {
 		return !this.validateDocument(value);
 	}
 
