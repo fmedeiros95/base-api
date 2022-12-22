@@ -1,0 +1,47 @@
+version: '3.7'
+
+services:
+  app:
+    build:
+      context: .
+      target: development
+    restart: always
+    volumes:
+      - .:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    env_file:
+      - .env
+    links:
+      - postgres
+      - redis
+    depends_on:
+      - postgres
+      - redis
+
+  postgres:
+    image: postgres:12-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    ports:
+      - 5050:5432
+    volumes:
+      - ./.data/postgres:/var/lib/postgresql/data
+
+  redis:
+    image: redis:alpine
+    restart: always
+    volumes:
+      - ./.data/redis:/data
+
+volumes:
+  node_modules:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/node_modules
+      o: bind
