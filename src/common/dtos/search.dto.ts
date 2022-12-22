@@ -1,3 +1,4 @@
+import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsNumber, IsOptional, Max, Min } from 'class-validator';
 import { ISearchFilter } from '../interfaces/search-filter.interface';
@@ -7,6 +8,7 @@ export class SearchDto {
 	@IsNumber({}, { message: 'Page must be a number' })
 	@Min(1, { message: 'Page must be greater than 0' })
 	@Transform(({ value }) => Number(value))
+	@ApiPropertyOptional()
 	page?: number;
 
 	@IsOptional()
@@ -14,11 +16,14 @@ export class SearchDto {
 	@Min(10, { message: 'Limit must be greater than 10' })
 	@Max(50, { message: 'Limit must be less than 50' })
 	@Transform(({ value }) => Number(value))
+	@ApiPropertyOptional()
 	limit?: number;
 
 	@IsOptional()
+	@ApiPropertyOptional()
 	filter?: ISearchFilter;
 
 	@IsOptional()
+	@ApiPropertyOptional()
 	relations?: string[];
 }
