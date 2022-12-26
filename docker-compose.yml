@@ -2,17 +2,14 @@ version: '3.7'
 
 services:
   app:
-    build:
-      context: .
-      target: development
-    restart: always
-    volumes:
-      - .:/usr/src/app
-      - node_modules:/usr/src/app/node_modules
+    image: node:16-alpine
+    command: sh -c "yarn install && yarn start:dev"
     ports:
       - ${APP_PORT}:${APP_PORT}
-    env_file:
-      - .env
+    volumes:
+      - .:/usr/src/app
+    working_dir: /usr/src/app
+    cpus: 1
     links:
       - postgres
       - redis
@@ -23,25 +20,17 @@ services:
   postgres:
     image: postgres:12-alpine
     restart: always
+    cpus: 0.5
     environment:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_DATABASE}
-    ports:
-      - 5050:5432
     volumes:
       - ./.data/postgres:/var/lib/postgresql/data
 
   redis:
     image: redis:alpine
     restart: always
+    cpus: 0.5
     volumes:
       - ./.data/redis:/data
-
-volumes:
-  node_modules:
-    driver: local
-    driver_opts:
-      type: none
-      device: ${PWD}/node_modules
-      o: bind
