@@ -27,11 +27,12 @@ export abstract class AbstractEntity extends BaseEntity {
 				const hasRelation = field.split('.');
 				if (hasRelation.length > 1) {
 					const [relation, field] = hasRelation;
+					const filterValue = filter[`${relation}.${field}`];
 					return {
 						[relation]: {
-							[field]: isNaN(+filter[field])
-								? ILike(`%${filter[field]}%`)
-								: +filter[field],
+							[field]: isNaN(+filterValue)
+								? ILike(`%${filterValue}%`)
+								: +filterValue,
 						},
 					};
 				} else {
