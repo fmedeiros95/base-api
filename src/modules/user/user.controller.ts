@@ -54,42 +54,41 @@ export class UserController {
 		return this.userService.changePassword(changeUserPasswordDto, user);
 	}
 
-	// Id is a UUID, use regex to validate it
 	@Get('avatar/:id([0-9]+)')
 	avatar(@Param('id') id: string, @Res() res: Response) {
 		return this.userService.avatar(+id, res);
 	}
 
 	@Get()
-	@HasPermission(['read', 'update'])
+	@HasPermission('users', ['read', 'update'])
 	@UseGuards(AuthGuard, PermissionGuard)
 	findAll(@Query() searchDto: SearchDto) {
 		return this.userService.find(searchDto);
 	}
 
 	@Post()
-	// @HasPermission('user', ['create'])
-	// @UseGuards(AuthGuard, PermissionGuard)
+	@HasPermission('users', ['create'])
+	@UseGuards(AuthGuard, PermissionGuard)
 	create(@Body() createUserDto: CreateUserDto) {
 		return this.userService.create(createUserDto);
 	}
 
 	@Get(':id([0-9]+)')
-	@HasPermission(['read'])
+	@HasPermission('users', ['read'])
 	@UseGuards(AuthGuard, PermissionGuard)
 	findById(@Param('id') id: string) {
 		return this.userService.findById(+id);
 	}
 
 	@Patch(':id([0-9]+)')
-	@HasPermission(['update'])
+	@HasPermission('users', ['update'])
 	@UseGuards(AuthGuard, PermissionGuard)
 	update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
 		return this.userService.update(+id, updateUserDto);
 	}
 
 	@Delete(':id([0-9]+)')
-	@HasPermission(['delete'])
+	@HasPermission('users', ['delete'])
 	@UseGuards(AuthGuard, PermissionGuard)
 	delete(@Param('id') id: string) {
 		return this.userService.delete(+id);

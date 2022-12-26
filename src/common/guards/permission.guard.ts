@@ -15,30 +15,27 @@ export class PermissionGuard implements CanActivate {
 	constructor(private reflector: Reflector) {}
 
 	canActivate(context: ExecutionContext): boolean {
-		const permissions = this.reflector.get<string[]>(
-			'permissions',
-			context.getHandler(),
-		);
+		const { entity, permissions } = this.reflector.get<{
+			entity: string;
+			permissions: string[];
+		}>('permissions', context.getHandler());
 		if (!permissions) return true;
 
 		const request = context.switchToHttp().getRequest();
 		const user = request.user as UserEntity;
 		if (!user) return false;
 
-		// Get active route
-		const activeRoute = request.route.path;
-
 		// Get user permissions by route
 		const userPermission =
 			user?.permissions &&
 			Object.values(user?.permissions).find(
-				(permission) => permission.route === activeRoute,
+				(permission) => permission.entity === entity,
 			);
 		if (!userPermission) return false;
 
 		// Log user, route and permission
 		this.logger.log(
-			`User: ${user.id} | Route: ${activeRoute} | Permission: ${JSON.stringify(
+			`User: ${user.id} | Entity: ${entity} | Permission: ${JSON.stringify(
 				userPermission,
 			)}`,
 		);

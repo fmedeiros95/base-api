@@ -5,7 +5,7 @@ import { UserEntity } from './user.entity';
 @Entity('user_permissions')
 export class UserPermissionEntity extends AbstractEntity {
 	@Column()
-	route: string;
+	entity: string;
 
 	@Column({ default: false })
 	create: boolean;
