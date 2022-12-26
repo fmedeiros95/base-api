@@ -9,7 +9,6 @@ services:
     volumes:
       - .:/usr/src/app
     working_dir: /usr/src/app
-    cpus: 1
     links:
       - postgres
       - redis
@@ -20,7 +19,6 @@ services:
   postgres:
     image: postgres:12-alpine
     restart: always
-    cpus: 0.5
     environment:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -31,6 +29,5 @@ services:
   redis:
     image: redis:alpine
     restart: always
-    cpus: 0.5
     volumes:
       - ./.data/redis:/data
