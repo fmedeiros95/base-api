@@ -19,9 +19,18 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
 			synchronize: this.configService.get('database.synchronize'),
 			retryAttempts: this.configService.get('database.retryAttempts'),
 			retryDelay: this.configService.get('database.retryDelay'),
-			entities: [join(__dirname, '/entities/*.entity{.ts,.js}')],
-			subscribers: [join(__dirname, '/subscribers/*{.ts,.js}')],
-			migrations: [join(__dirname, '/migrations/*{.ts,.js}')],
+			entities: [
+				join(__dirname, '/entities/*.entity{.ts,.js}'),
+				join(__dirname, '/../modules/**/entities/*.entity{.ts,.js}'),
+			],
+			subscribers: [
+				join(__dirname, '/subscribers/*{.ts,.js}'),
+				join(__dirname, '/../modules/**/subscribers/*{.ts,.js}'),
+			],
+			migrations: [
+				join(__dirname, '/migrations/*{.ts,.js}'),
+				join(__dirname, '/../modules/**/migrations/*{.ts,.js}'),
+			],
 			keepConnectionAlive: true,
 			logging: this.configService.get('app.nodeEnv') !== 'production',
 			extra: {
